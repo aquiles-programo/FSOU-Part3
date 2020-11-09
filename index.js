@@ -16,13 +16,13 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time :pers
 
 
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (_request, response) => {
   Person.find({}).then(persons => {
     response.json(persons)
   })
 })
 
-app.get('/info', (request, response) => {
+app.get('/info', (_request, response) => {
   Person.find({}).then(people => {
     response.end(`Phonebook has info for ${people.length} people
     ${new Date()}`)
@@ -77,12 +77,12 @@ app.post('/api/persons', (req, res, next) => {
   })
 })
 
-const unknownEndpoint = (request, response) => {
+const unknownEndpoint = (_request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint)
 
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error, _request, response, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
